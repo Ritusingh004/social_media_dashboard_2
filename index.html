@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse.io — Social Media Dashboard</title>
+  <meta name="description" content="Pulse.io — Your all-in-one social media analytics dashboard with engagement stats, follower insights, growth trends, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- MongoDB Animated Background Canvas -->
+  <canvas id="mongo-bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">Pulse<span class="logo-accent">.io</span></span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-tooltip="Overview">
+        <span class="nav-icon">📊</span><span class="nav-label">Overview</span>
+      </a>
+      <a href="#" class="nav-item" data-tooltip="Analytics">
+        <span class="nav-icon">📈</span><span class="nav-label">Analytics</span>
+      </a>
+      <a href="#" class="nav-item" data-tooltip="Content">
+        <span class="nav-icon">🎨</span><span class="nav-label">Content</span>
+      </a>
+      <a href="#" class="nav-item" data-tooltip="Schedule">
+        <span class="nav-icon">📅</span><span class="nav-label">Schedule</span>
+      </a>
+      <a href="#" class="nav-item" data-tooltip="Audience">
+        <span class="nav-icon">👥</span><span class="nav-label">Audience</span>
+      </a>
+      <a href="#" class="nav-item" data-tooltip="Messages">
+        <span class="nav-icon">💬</span><span class="nav-label">Messages</span>
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="#" class="nav-item" data-tooltip="Settings">
+        <span class="nav-icon">⚙️</span><span class="nav-label">Settings</span>
+      </a>
+      <div class="user-avatar-mini">
+        <div class="avatar-circle">RS</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN LAYOUT -->
+  <div class="main-wrapper">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+        <h1 class="page-title">Overview <span class="month-badge">March 2026</span></h1>
+      </div>
+      <div class="topbar-center">
+        <div class="platform-tabs">
+          <button class="platform-tab active" data-platform="all">All</button>
+          <button class="platform-tab instagram" data-platform="instagram">Instagram</button>
+          <button class="platform-tab twitter" data-platform="twitter">Twitter</button>
+          <button class="platform-tab youtube" data-platform="youtube">YouTube</button>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-bar">
+          <span>🔍</span>
+          <input type="text" placeholder="Search..." id="searchInput" />
+        </div>
+        <button class="btn-icon" id="notifBtn" title="Notifications">
+          🔔<span class="notif-dot"></span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <div class="user-profile">
+          <div class="avatar-circle">RS</div>
+          <div class="user-info">
+            <span class="user-name">Ritu Singh</span>
+            <span class="user-role">Creator</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content" id="mainContent">
+
+      <!-- STAT CARDS -->
+      <section class="stats-grid" aria-label="Key Statistics">
+        <div class="stat-card" data-trend="up">
+          <div class="stat-header">
+            <span class="stat-label">Total Followers</span>
+            <span class="stat-platform-icon">👥</span>
+          </div>
+          <div class="stat-value" data-target="284000">0</div>
+          <div class="stat-sub"><span class="badge badge-up">▲ 12.4%</span> vs last month</div>
+          <div class="stat-sparkline" id="spark1"></div>
+        </div>
+        <div class="stat-card" data-trend="up">
+          <div class="stat-header">
+            <span class="stat-label">Impressions</span>
+            <span class="stat-platform-icon">👁️</span>
+          </div>
+          <div class="stat-value" data-target="1800000">0</div>
+          <div class="stat-sub"><span class="badge badge-up">▲ 18.7%</span> vs last month</div>
+          <div class="stat-sparkline" id="spark2"></div>
+        </div>
+        <div class="stat-card" data-trend="down">
+          <div class="stat-header">
+            <span class="stat-label">Engagement Rate</span>
+            <span class="stat-platform-icon">💬</span>
+          </div>
+          <div class="stat-value" data-target="4.7" data-suffix="%">0</div>
+          <div class="stat-sub"><span class="badge badge-down">▼ 0.3%</span> vs last month</div>
+          <div class="stat-sparkline" id="spark3"></div>
+        </div>
+        <div class="stat-card" data-trend="down">
+          <div class="stat-header">
+            <span class="stat-label">Avg. Reach / Post</span>
+            <span class="stat-platform-icon">📡</span>
+          </div>
+          <div class="stat-value" data-target="9200">0</div>
+          <div class="stat-sub"><span class="badge badge-down">▼ 1.6%</span> vs last month</div>
+          <div class="stat-sparkline" id="spark4"></div>
+        </div>
+      </section>
+
+      <!-- CHARTS ROW -->
+      <section class="charts-grid">
+        <!-- Growth Trend -->
+        <div class="card chart-card growth-card">
+          <div class="card-header">
+            <h2 class="card-title">Growth Trend</h2>
+            <div class="chart-legend">
+              <span class="legend-item"><span class="legend-dot dot-followers"></span>Followers</span>
+              <span class="legend-item"><span class="legend-dot dot-impressions"></span>Impressions</span>
+            </div>
+          </div>
+          <canvas id="growthChart" height="140"></canvas>
+        </div>
+
+        <!-- Follower Sources -->
+        <div class="card chart-card sources-card">
+          <div class="card-header">
+            <h2 class="card-title">Follower Sources</h2>
+          </div>
+          <div class="donut-wrapper">
+            <canvas id="sourcesChart" width="180" height="180"></canvas>
+            <div class="donut-center">
+              <span class="donut-label">Total</span>
+              <span class="donut-value">284K</span>
+            </div>
+          </div>
+          <div class="sources-legend" id="sourcesLegend"></div>
+        </div>
+      </section>
+
+      <!-- MIDDLE ROW -->
+      <section class="middle-grid">
+        <!-- Engagement Breakdown -->
+        <div class="card engagement-card">
+          <div class="card-header">
+            <h2 class="card-title">Engagement Breakdown</h2>
+          </div>
+          <div class="engagement-bars" id="engagementBars"></div>
+          <div class="card-divider"></div>
+          <h3 class="sub-title">Audience Age</h3>
+          <div class="age-bars" id="ageBars"></div>
+        </div>
+
+        <!-- Scheduled Posts -->
+        <div class="card scheduled-card">
+          <div class="card-header">
+            <h2 class="card-title">Scheduled Posts</h2>
+            <button class="btn-add" id="addPostBtn">+ Add</button>
+          </div>
+          <ul class="scheduled-list" id="scheduledList"></ul>
+        </div>
+
+        <!-- Best Days Heatmap -->
+        <div class="card heatmap-card">
+          <div class="card-header">
+            <h2 class="card-title">Best Days to Post</h2>
+          </div>
+          <div class="heatmap-container" id="heatmapContainer"></div>
+        </div>
+      </section>
+
+      <!-- TOP PERFORMING CONTENT -->
+      <section class="card top-content-card">
+        <div class="card-header">
+          <h2 class="card-title">Top Performing Content</h2>
+          <div class="content-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="video">Video</button>
+            <button class="filter-btn" data-filter="thread">Thread</button>
+            <button class="filter-btn" data-filter="carousel">Carousel</button>
+          </div>
+        </div>
+        <div class="top-content-list" id="topContentList"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ADD POST MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="addPostModal">
+      <div class="modal-header">
+        <h3>Schedule New Post</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <label>Platform</label>
+        <select id="postPlatform">
+          <option>Instagram</option>
+          <option>Twitter</option>
+          <option>YouTube</option>
+        </select>
+        <label>Caption / Title</label>
+        <input type="text" id="postCaption" placeholder="Enter post caption..." />
+        <label>Date & Time</label>
+        <input type="datetime-local" id="postDateTime" />
+        <label>Type</label>
+        <select id="postType">
+          <option>Reel</option>
+          <option>Story</option>
+          <option>Tweet</option>
+          <option>Thread</option>
+          <option>Video</option>
+          <option>Carousel</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="modalCancel">Cancel</button>
+        <button class="btn-primary" id="modalSave">Schedule Post</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
